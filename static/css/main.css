@@ -1,0 +1,96 @@
+body {
+    background-color: #EDEDED;
+}
+
+#panel {
+    background-color: #FFFFFF;
+    position: absolute;
+    padding-top: 4vh;
+    padding-bottom: 4vh;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.title {
+    font-family: "Roboto", sans-serif;
+    color: #B65288;
+}
+
+#panel .title {
+    padding-bottom: 60px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px #EDEDED inset !important;
+}
+
+.styled-input {
+    background-color: #EDEDED;
+    border-style: none;
+    border-radius: 0;
+}
+
+.coloured {
+    color: #B65288;
+}
+
+/* reCAPTCHA v2 is too big for small devices; shrink its size. */
+@media (max-width: 767.98px) {
+    .g-recaptcha {
+        -moz-transform: scale(0.77);
+        -webkit-transform: scale(0.77);
+        transform: scale(0.77);
+    }
+}
+
+.g-recaptcha {
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+}
+
+#login-button, #register-button, #button {
+    margin-top: 60px;
+}
+
+.btn {
+    margin-bottom: 10px;
+    background-color: #B65288;
+    border-style: none;
+    border-radius: 0;
+    color: #FFFFFF;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    background-color: #C77FA6;
+    color: #FFFFFF;
+    transition: 0.5s;
+}
+
+.btn:active {
+    background-color: #863962;
+    color: #FFFFFF;
+    transition: 0.2s;
+}
+
+.top-margin {
+    margin-top: 5vh;
+}
+
+.padded {
+    padding: 30px;
+}
+
+.description {
+    white-space: pre-wrap;
+}
+
+.current-vote {
+    color: black;
+}

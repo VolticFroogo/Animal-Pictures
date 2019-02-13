@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Forgot Password - AP</title>
+
+        <!-- Meta Tags -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300">
+        <link rel="stylesheet" type="text/css" href="/css/main.css">
+    </head>
+
+    <body>
+        <div class="container col-sm-10 col-md-6 col-lg-4 col-xl-3 align-middle text-center shadow" id="panel">
+            <h1 class="title">Reset Password</h1>
+            <div class="row justify-content-center">
+                <form>
+                    <div class="form-group align-middle text-center">
+                        <input id="email" type="email" placeholder="Email Address" class="form-control styled-input">
+
+                        <a href="/login/" class="coloured"><strong>Remembered your password?</strong></a>
+                        <br>
+
+                        <input id="button" class="btn col-7" type="button" value="Send Email">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- JavaScript -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+        <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+        <script type="text/javascript" src="https://www.google.com/recaptcha/api.js?render=6Lfyi5AUAAAAAJhGIO45QyuAD7L_yqIq5s0Kc6NN"></script>
+        <script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>
+        <script type="text/javascript" src="/js/forgot-password.js"></script>
+
+        <!-- Anti-Bot Verification Modal (needs to be below JavaScript because of the reCAPTCHA callback) -->
+        <div class="modal fade" id="recaptcha-modal" tabindex="-1" role="dialog" aria-labelledby="recaptcha-modal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Anti-Bot Verification</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row justify-content-center">
+                            <div class="g-recaptcha" data-callback="recaptchaCallback" data-sitekey="6Ldz544UAAAAAI_0AFltDydMPkOILkW7gSwz5mot"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

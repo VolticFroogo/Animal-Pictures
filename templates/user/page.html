@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ .User.Username }} - AP</title>
+        {{ if (ne .User.Description "") }}<meta name="description" content="{{ .User.Description }}"/>
+        {{ else }}<meta name="description" content="Visit {{ .User.Username }}'s profile on Animal Pictures."/>{{ end }}
+
+        <!-- Meta Tags -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+        <meta name="title" content="Visit {{ .User.Username }}'s on Animal Pictures"/>
+        <meta name="description" content="View all of {{ .User.Username }}'s posts and see more about them."/>
+        <meta name="keywords" content="Animal Pictures, {{ .User.Username }}{{ if (ne .User.Fname "") }}, {{ .User.Fname}}{{ end }}{{ if (ne .User.Lname "") }}, {{ .User.Lname }}{{ end }}"/>
+        <meta name="copyright" content="Copyright of Animal Pictures."/>
+
+        <!-- Schema.org markup for Google+ -->
+        <meta itemprop="name" content="{{ .User.Username }}">
+        {{ if (ne .User.Description "") }}<meta itemprop="description" content="{{ .User.Description }}">
+        {{ else }}<meta itemprop="description" content="View {{ .User.Username }}'s profile on Animal Pictures">{{ end }}
+        {{ if .User.HasProfilePicture }}<meta itemprop="image" content="{{ .User.ProfilePicture }}">{{ end }}
+
+        <!-- Open Graph data -->
+        <meta property="og:title" content="{{ .User.Username }}"/>
+        <meta property="og:type" content="profile"/>
+        <meta property="og:url" content="https://ap.froogo.co.uk/user/{{ .User.UUID }}"/>
+        {{ if .User.HasProfilePicture }}<meta property="og:image" content="{{ .User.ProfilePicture }}"/>{{ end }}
+        {{ if (ne .User.Description "") }}<meta property="og:description" content="{{ .User.Description }}"/>
+        {{ else }}<meta property="og:description" content="Visit {{ .User.Username }}'s profile on Animal Pictures."/>{{ end }}
+        <meta property="og:site_name" content="Animal Pictures"/>
+        <meta property="og:profile:username" content="{{ .User.Username }}"/>
+        {{ if (ne .User.Fname "") }}<meta property="og:profile:first_name" content="{{ .User.Fname }}"/>{{ end }}
+        {{ if (ne .User.Lname "") }}<meta property="og:profile:last_name" content="{{ .User.Lname }}"/>{{ end }}
+
+        {{ template "global-css" . }}
+    </head>
+
+    <body>
+        <p>{{ .User.Username }}{{ if (eq .User.Privilege 0) }} [Unverified]{{ else if (eq .User.Privilege 2) }} [Moderator]{{ else if (eq .User.Privilege 3)}} [Admin]{{ end }}</p>
+        {{ if (ne .User.Description "") }}<p>{{ .User.Description }}</p>{{ end }}
+        {{ if .User.HasProfilePicture }}<img src="{{ .User.ProfilePicture }}">{{ end }}
+        <p>User since {{ .User.GetCreation }}.</p>
+
+        {{ template "global-js" . }}
+    </body>
+</html>

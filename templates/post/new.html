@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>New Post - AP</title>
+
+        <!-- Meta Tags -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+        {{ template "global-css" . }}
+    </head>
+
+    <body>
+        <div class="container bg-white top-margin padded">
+            {{ if .LoggedIn }}
+                <h1 class="title">New Post</h1>
+                <div class="dropdown-divider"></div>
+                <form id="post-form">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="email" class="form-control" id="title" name="title">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" id="image-button">Select image</button>
+                        <input hidden id="image" name="image" type="file" accept="image/x-png,image/jpeg">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" id="submit-button">Create post</button>
+                    </div>
+                </form>
+            {{ else }}
+                <p>You can't upload a picture until you <a href="/login/">log in</a>.</p>
+            {{ end }}
+        </div>
+
+        {{ template "global-js" . }}
+        <script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>
+        <script type="text/javascript" src="/js/post-new.js"></script>
+
+        <!-- Anti-Bot Verification Modal (needs to be below JavaScript because of the reCAPTCHA callback) -->
+        <div class="modal fade" id="recaptcha-modal" tabindex="-1" role="dialog" aria-labelledby="recaptcha-modal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Anti-Bot Verification</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row justify-content-center">
+                            <div class="g-recaptcha" data-callback="recaptchaCallback" data-sitekey="6Ldz544UAAAAAI_0AFltDydMPkOILkW7gSwz5mot"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

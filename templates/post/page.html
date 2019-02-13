@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ .Post.Title }} - AP</title>
+        <meta name="description" content="{{ .Post.Description }}"/>
+
+        <!-- Meta Tags -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+        <!-- Schema.org markup for Google+ -->
+        <meta itemprop="name" content="{{ .Post.Title }}">
+        <meta itemprop="description" content="{{ .Post.Description }}">
+        <meta itemprop="image" content="https://s3.eu-west-2.amazonaws.com/froogo-ap/post/{{ index .Post.Images 0 }}">
+
+        <!-- Open Graph data -->
+        <meta property="og:title" content="{{ .Post.Title }}"/>
+        <meta property="og:url" content="https://ap.froogo.co.uk/post/{{ .Post.UUID }}"/>
+        <meta property="og:image" content="https://s3.eu-west-2.amazonaws.com/froogo-ap/post/{{ index .Post.Images 0 }}"/>
+        <meta property="og:description" content="{{ .Post.Description }}"/>
+        <meta property="og:site_name" content="Animal Pictures"/>
+
+        {{ template "global-css" . }}
+    </head>
+
+    <body>
+        <div class="container bg-white top-margin padded shadow">
+            <h1 class="title">{{ .Post.Title }}</h1>
+            <div class="dropdown-divider"></div>
+            <p class="description">{{ .Post.Description }}</p>
+            <img src="https://s3.eu-west-2.amazonaws.com/froogo-ap/post/{{ index .Post.Images 0 }}">
+            <br><br>
+            <p>Post created on {{ .Post.GetCreation }}.</p>
+            <p>Score: <span id="score">{{ .Post.Score }}</span></p>
+            <p><a id="upvote" href="javascript:void(0);" {{ if (eq .Post.Vote 1) }}class="current-vote"{{ end }}>Upvote</a> - <a id="downvote" href="javascript:void(0);" {{ if (eq .Post.Vote 2) }}class="current-vote"{{ end }}>Downvote</a></p>
+        </div>
+
+        {{ template "global-js" . }}
+        <script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>
+        <script type="text/javascript">
+            var LoggedIn = {{ if .LoggedIn }}true{{ else }}false{{ end }};
+            var VoteStatus = {{ .Post.Vote }};
+        </script>
+        <script type="text/javascript" src="/js/post.js"></script>
+
+        <!-- Anti-Bot Verification Modal (needs to be below JavaScript because of the reCAPTCHA callback) -->
+        <div class="modal fade" id="recaptcha-modal" tabindex="-1" role="dialog" aria-labelledby="recaptcha-modal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Anti-Bot Verification</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row justify-content-center">
+                            <div class="g-recaptcha" data-callback="recaptchaCallback" data-sitekey="6Ldz544UAAAAAI_0AFltDydMPkOILkW7gSwz5mot"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

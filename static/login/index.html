@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Log In - AP</title>
+
+        <!-- Meta Tags -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+        <meta name="title" content="Log in"/>
+        <meta name="description" content="Log in to Animal Pictures for a personalised experience and upload your own posts."/>
+        <meta name="keywords" content="Animal Pictures, Login, Log in"/>
+        <meta name="copyright" content="Copyright of Animal Pictures."/>
+
+        <!-- Schema.org markup for Google+ -->
+        <meta itemprop="name" content="Log in">
+        <meta itemprop="description" content="Log in to Animal Pictures">
+        <!--<meta itemprop="image" content="/img/logo.png/">-->
+
+        <!-- Open Graph data -->
+        <meta property="og:title" content="Log in"/>
+        <meta property="og:url" content="https://ap.froogo.co.uk/login/"/>
+        <!--<meta property="og:image" content="/img/logo.png"/>-->
+        <meta property="og:description" content="Log in to Animal Pictures for a personalised experience and upload your own posts."/>
+        <meta property="og:site_name" content="Animal Pictures"/>
+
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300">
+        <link rel="stylesheet" type="text/css" href="/css/main.css">
+    </head>
+
+    <body>
+        <div class="container col-sm-10 col-md-6 col-lg-4 col-xl-3 align-middle text-center shadow" id="panel">
+            <h1 class="title">Log in</h1>
+            <div class="row justify-content-center">
+                <form>
+                    <div class="form-group align-middle text-center">
+                        <input id="email" type="email" placeholder="Email Address" class="form-control styled-input">
+                        <br>
+                        <input id="password" type="password" placeholder="Password" class="form-control styled-input">
+
+                        <a href="/forgot-password/" class="coloured"><strong>Forgot your password?</strong></a>
+
+                        <input id="login-button" class="btn col-7" type="button" value="Log in">
+                        <a href="/register/"><input class="btn col-7" type="button" value="Register"></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- JavaScript -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+        <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+        <script type="text/javascript" src="https://www.google.com/recaptcha/api.js?render=6Lfyi5AUAAAAAJhGIO45QyuAD7L_yqIq5s0Kc6NN"></script>
+        <script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>
+        <script type="text/javascript" src="/js/url-params.js"></script>
+        <script type="text/javascript" src="/js/login.js"></script>
+
+        <!-- Anti-Bot Verification Modal (needs to be below JavaScript because of the reCAPTCHA callback) -->
+        <div class="modal fade" id="recaptcha-modal" tabindex="-1" role="dialog" aria-labelledby="recaptcha-modal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Anti-Bot Verification</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row justify-content-center">
+                            <div class="g-recaptcha" data-callback="recaptchaCallback" data-sitekey="6Ldz544UAAAAAI_0AFltDydMPkOILkW7gSwz5mot"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
