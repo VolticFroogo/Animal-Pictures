@@ -53,7 +53,7 @@ func New(w http.ResponseWriter, r *http.Request) {
 	}
 
 	images := []string{location}
-	uuid, err := db.NewPost(form.Value["title"][0], form.Value["description"][0], context.Get(r, "uuid").(string), images)
+	post, err := db.NewPost(form.Value["title"][0], form.Value["description"][0], context.Get(r, "uuid").(string), images)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		helpers.ThrowErr(w, r, "Adding Post to DB error", err)
@@ -61,7 +61,7 @@ func New(w http.ResponseWriter, r *http.Request) {
 	}
 
 	helpers.JSONResponse(response{
-		UUID: uuid,
+		UUID: post.UUID,
 	}, w)
 }
 

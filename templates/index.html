@@ -12,7 +12,10 @@
     </head>
 
     <body>
-        {{ if .LoggedIn }}<p>{{ .Self.Username }}</p>{{ end }}
+        <div class="container bg-white top-margin padded">
+            <p>{{ if .LoggedIn }}Welcome {{ .Self.Username }}{{ else }}You are not logged in, <a href="/login/">log in here</a>.{{ end }}</p>
+            {{ range .Posts }}<p><a href="/post/{{ .UUID }}">{{ .Title }} - {{ .Description }}</a></p>{{ end }}
+        </div>
 
         {{ template "global-js" . }}
     </body>

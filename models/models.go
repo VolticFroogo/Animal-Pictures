@@ -16,8 +16,12 @@ const (
 	EmailAntiSpamTime = time.Hour * 24 // 1 day.
 	// CautiousIPTime is how long an IP will stay on the cautious map.
 	CautiousIPTime = time.Hour * 24 // 1 day.
-	// CaptchaLoginScore is the minimum score required to be accepted with a v3 login.
-	CaptchaLoginScore = 0.5
+	// CaptchaScore is the minimum score required to be accepted with a v3 reCAPTCHA.
+	CaptchaScore = 0.5
+	// HotPostsTickRate is how often the hot posts page should be updated.
+	HotPostsTickRate = time.Minute // 1 minute.
+	// PostsPerPage is how many posts there are on a page.
+	PostsPerPage = 20
 )
 
 // Privileges
@@ -79,8 +83,8 @@ func (post Post) Score() int {
 	return post.Upvotes - post.Downvotes
 }
 
-// SetRating sets the rating of a post.
-func (post Post) SetRating() {
+// GetRating gets the rating of a post.
+func (post Post) GetRating() float64 {
 	order := math.Log10(math.Max(math.Abs(float64(post.Score())), float64(1)))
 
 	var sign float64
@@ -90,8 +94,8 @@ func (post Post) SetRating() {
 		sign = -1
 	}
 
-	seconds := post.Creation - 1134028003
-	post.Rating = sign*order + float64(seconds/45000)
+	seconds := post.Creation - 1550144333
+	return sign*order + float64(seconds/45000)
 }
 
 // TemplateVariables is the struct used when executing a template.
@@ -101,6 +105,7 @@ type TemplateVariables struct {
 	UnixTime   int64
 	LoggedIn   bool
 	Post       Post
+	Posts      []Post
 }
 
 // AJAXData is the struct used with the AJAX middleware.

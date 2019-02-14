@@ -27,6 +27,7 @@
     <body>
         <div class="container bg-white top-margin padded shadow">
             <h1 class="title">{{ .Post.Title }}</h1>
+            <h5 class="title">by <a href="/user/{{ .Post.UserUUID }}">Froogo</a></h5>
             <div class="dropdown-divider"></div>
             <p class="description">{{ .Post.Description }}</p>
             <img src="https://s3.eu-west-2.amazonaws.com/froogo-ap/post/{{ index .Post.Images 0 }}">

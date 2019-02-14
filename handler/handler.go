@@ -125,6 +125,13 @@ func index(w http.ResponseWriter, r *http.Request) {
 		variables.CsrfSecret = csrfSecret.Value
 	}
 
+	var err error
+	variables.Posts, err = db.GetHotPosts(0)
+	if err != nil {
+		helpers.ThrowErr(w, r, "Getting hot posts error", err)
+		return
+	}
+
 	t, err := template.ParseFiles("templates/index.html", "templates/nested.html") // Parse the HTML pages.
 	if err != nil {
 		helpers.ThrowErr(w, r, "Template parsing error", err)

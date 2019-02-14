@@ -57,7 +57,7 @@ func V3(v2, v3, ip, action string) bool {
 		captcha, nErr := recaptcha.Check(ip, v3)
 		if nErr != nil {
 			return false
-		} else if captcha.Score < models.CaptchaLoginScore {
+		} else if captcha.Score < models.CaptchaScore {
 			// The user's score is too low to log in, tell them they need to complete the v2 reCAPTCHA.
 			// Add them to the cautious IP list.
 			cautiousIP[ip] = time.Now().Unix()
