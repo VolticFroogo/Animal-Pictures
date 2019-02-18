@@ -10,7 +10,7 @@ import (
 
 // GetHotPosts will get the respective hot posts for a given page.
 func GetHotPosts(page int) (posts []models.Post, err error) {
-	rows, err := db.Query("SELECT uuid, useruuid, title, description, images, votes, rating, creation FROM posts ORDER BY rating DESC LIMIT ?, ?", page*models.PostsPerPage, models.PostsPerPage+page*models.PostsPerPage)
+	rows, err := db.Query("SELECT P.uuid, P.title, P.description, P.images, P.votes, P.rating, P.creation, U.uuid, U.email, U.password, U.username, U.privilege, U.creation, U.fname, U.lname, U.description, U.imageExtension FROM posts AS P INNER JOIN users AS U ON P.useruuid = U.uuid ORDER BY P.rating DESC LIMIT ?, ?", page*models.PostsPerPage, models.PostsPerPage+page*models.PostsPerPage)
 	if err != nil {
 		return
 	}
@@ -21,7 +21,7 @@ func GetHotPosts(page int) (posts []models.Post, err error) {
 		var post models.Post
 		var imagesJSON, votesJSON string
 
-		err = rows.Scan(&post.UUID, &post.UserUUID, &post.Title, &post.Description, &imagesJSON, &votesJSON, &post.Rating, &post.Creation) // Scan data from query.
+		err = rows.Scan(&post.UUID, &post.Title, &post.Description, &imagesJSON, &votesJSON, &post.Rating, &post.Creation, &post.Owner.UUID, &post.Owner.Email, &post.Owner.Password, &post.Owner.Username, &post.Owner.Privilege, &post.Owner.Creation, &post.Owner.Fname, &post.Owner.Lname, &post.Owner.Description, &post.Owner.ImageExtension) // Scan data from query.
 		if err != nil {
 			return
 		}
@@ -52,7 +52,7 @@ func GetHotPosts(page int) (posts []models.Post, err error) {
 
 // GetPost returns a post given a UUID.
 func GetPost(uuid string) (post models.Post, err error) {
-	rows, err := db.Query("SELECT useruuid, title, description, images, votes, rating, creation FROM posts WHERE uuid=?", uuid)
+	rows, err := db.Query("SELECT P.title, P.description, P.images, P.votes, P.rating, P.creation, U.uuid, U.email, U.password, U.username, U.privilege, U.creation, U.fname, U.lname, U.description, U.imageExtension FROM posts AS P INNER JOIN users AS U ON P.useruuid = U.uuid WHERE P.uuid=?", uuid)
 	if err != nil {
 		return
 	}
@@ -63,7 +63,7 @@ func GetPost(uuid string) (post models.Post, err error) {
 	if rows.Next() {
 		var imagesJSON, votesJSON string
 
-		err = rows.Scan(&post.UserUUID, &post.Title, &post.Description, &imagesJSON, &votesJSON, &post.Rating, &post.Creation) // Scan data from query.
+		err = rows.Scan(&post.Title, &post.Description, &imagesJSON, &votesJSON, &post.Rating, &post.Creation, &post.Owner.UUID, &post.Owner.Email, &post.Owner.Password, &post.Owner.Username, &post.Owner.Privilege, &post.Owner.Creation, &post.Owner.Fname, &post.Owner.Lname, &post.Owner.Description, &post.Owner.ImageExtension) // Scan data from query.
 		if err != nil {
 			return
 		}

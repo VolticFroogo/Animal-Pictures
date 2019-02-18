@@ -13,8 +13,9 @@
 
     <body>
         <div class="container bg-white top-margin padded">
-            <p>{{ if .LoggedIn }}Welcome {{ .Self.Username }}{{ else }}You are not logged in, <a href="/login/">log in here</a>.{{ end }}</p>
-            {{ range .Posts }}<p><a href="/post/{{ .UUID }}">{{ .Title }} - {{ .Description }}</a></p>{{ end }}
+            <h1 class="title">Animal Pictures</h1>
+            <p>{{ if .LoggedIn }}Welcome {{ .Self.Username }}, would you like to <a href="/post/new">create a post</a>?{{ else }}You are not logged in, <a href="/login/">log in here</a> to be able to create posts.{{ end }}</p>
+            {{ range .Posts }}<p>Score: {{ .Score }} - <a href="/post/{{ .UUID }}">{{ .Title }}</a> - {{ .Description }} - by <a href="/user/{{ .Owner.UUID }}">{{ .Owner.Username }}</a></p>{{ end }}
         </div>
 
         {{ template "global-js" . }}

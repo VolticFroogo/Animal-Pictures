@@ -112,7 +112,7 @@ func Vote(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if post.UserUUID == "" {
+	if post.Creation == 0 {
 		// Post has been deleted.
 		w.WriteHeader(http.StatusGone)
 		return

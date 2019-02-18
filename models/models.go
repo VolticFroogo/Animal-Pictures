@@ -64,6 +64,7 @@ type TokenClaims struct {
 
 // Post is the struct for posts.
 type Post struct {
+	Owner                              User
 	UUID, UserUUID, Title, Description string
 	Images                             []string
 	Creation                           int64
