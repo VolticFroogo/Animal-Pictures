@@ -25,7 +25,10 @@ var recaptchaCallback = function() {
                 $("#recaptcha-modal").modal("show");
             },
             413: function() { // Request entity too large (the image we attempted to upload was rejected for being too big).
-                toastr["error"]("You can not upload an image over 50MB.", "Max File Size Exceeded", "Post Creation Failed");
+                toastr["error"]("You can not upload an image over 5MB.", "Post Creation Failed");
+            },
+            415: function() { // Request entity too large (the image we attempted to upload was rejected for being too big).
+                toastr["error"]("The file you have selected is not an image.", "Post Creation Failed");
             },
             500: function() { // Internal server error.
                 toastr["error"]("Internal server error.", "Post Creation Failed");
@@ -78,7 +81,10 @@ $(document).ready(function(){
                         $("#recaptcha-modal").modal("show");
                     },
                     413: function() { // Request entity too large (the image we attempted to upload was rejected for being too big).
-                        toastr["error"]("You can not upload an image over 50MB.", "Max File Size Exceeded", "Post Creation Failed");
+                        toastr["error"]("You can not upload an image over 5MB.", "Post Creation Failed");
+                    },
+                    415: function() { // Request entity too large (the image we attempted to upload was rejected for being too big).
+                        toastr["error"]("The file you have selected is not an image.", "Post Creation Failed");
                     },
                     500: function() { // Internal server error.
                         toastr["error"]("Internal server error.", "Post Creation Failed");

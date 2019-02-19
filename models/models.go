@@ -35,7 +35,7 @@ const (
 // User is a user retrieved from a Database.
 type User struct {
 	Creation                                  int64
-	Privilege                                 int `json:"-"`
+	Privilege                                 int
 	UUID, Username                            string
 	Description, Fname, Lname, ImageExtension string `json:",omitempty"`
 	Email, Password                           string `json:"-"`
@@ -64,14 +64,14 @@ type TokenClaims struct {
 
 // Post is the struct for posts.
 type Post struct {
-	Owner                              User
-	UUID, UserUUID, Title, Description string
-	Images                             []string
-	Creation                           int64
-	Votes                              map[string]bool `json:"-"`
-	Upvotes, Downvotes                 int
-	Rating                             float64
-	Vote                               int `json:"-"`
+	Owner                    User
+	UUID, Title, Description string
+	Images                   []string
+	Creation                 int64
+	Votes                    map[string]bool `json:"-"`
+	Upvotes, Downvotes       int
+	Rating                   float64
+	Vote                     int `json:"-"`
 }
 
 // GetCreation is a template function used to return a human readable date from the creation unix timestamp.

@@ -10,7 +10,7 @@ import (
 
 // GetHotPosts will get the respective hot posts for a given page.
 func GetHotPosts(page int) (posts []models.Post, err error) {
-	rows, err := db.Query("SELECT P.uuid, P.title, P.description, P.images, P.votes, P.rating, P.creation, U.uuid, U.email, U.password, U.username, U.privilege, U.creation, U.fname, U.lname, U.description, U.imageExtension FROM posts AS P INNER JOIN users AS U ON P.useruuid = U.uuid ORDER BY P.rating DESC LIMIT ?, ?", page*models.PostsPerPage, models.PostsPerPage+page*models.PostsPerPage)
+	rows, err := db.Query("SELECT P.uuid, P.title, P.description, P.images, P.votes, P.rating, P.creation, U.uuid, U.email, U.password, U.username, U.privilege, U.creation, U.fname, U.lname, U.description, U.imageExtension FROM posts AS P INNER JOIN users AS U ON P.useruuid = U.uuid ORDER BY P.rating DESC, P.creation DESC LIMIT ?, ?", page*models.PostsPerPage, models.PostsPerPage+page*models.PostsPerPage)
 	if err != nil {
 		return
 	}
@@ -112,7 +112,6 @@ func NewPost(title, description, userUUID string, images []string) (post models.
 
 	post = models.Post{
 		UUID:        post.UUID,
-		UserUUID:    userUUID,
 		Title:       title,
 		Description: description,
 		Images:      images,
@@ -122,7 +121,7 @@ func NewPost(title, description, userUUID string, images []string) (post models.
 
 	post.Rating = post.GetRating()
 
-	_, err = db.Exec("INSERT INTO posts (uuid, useruuid, title, description, images, votes, rating, creation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", post.UUID, post.UserUUID, post.Title, post.Description, imagesJSON, "{}", post.Rating, post.Creation)
+	_, err = db.Exec("INSERT INTO posts (uuid, useruuid, title, description, images, votes, rating, creation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", post.UUID, userUUID, post.Title, post.Description, imagesJSON, "{}", post.Rating, post.Creation)
 
 	return
 }

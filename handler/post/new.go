@@ -47,6 +47,12 @@ func New(w http.ResponseWriter, r *http.Request) {
 	// Upload the image.
 	location, err := upload.Image(form.File["image"][0])
 	if err != nil {
+		if err == upload.ErrNotImage {
+			// They are trying to upload a file that we think isn't an image.
+			w.WriteHeader(http.StatusUnsupportedMediaType)
+			return
+		}
+
 		w.WriteHeader(http.StatusInternalServerError)
 		helpers.ThrowErr(w, r, "Uploading image error", err)
 		return

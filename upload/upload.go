@@ -2,6 +2,8 @@ package upload
 
 import (
 	"bufio"
+	"bytes"
+	"errors"
 	"mime/multipart"
 	"net/url"
 	"path/filepath"
@@ -10,7 +12,13 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
+	"github.com/h2non/filetype"
 	"github.com/zemirco/uid"
+)
+
+// Define errors.
+var (
+	ErrNotImage = errors.New("file is not an image")
 )
 
 var (
@@ -32,9 +40,27 @@ func Init() (err error) {
 
 // Image uploads an image to Amazon S3.
 func Image(file *multipart.FileHeader) (location string, err error) {
+	// Open the image file.
 	image, err := file.Open()
+	// Close it once this function returns.
 	defer image.Close()
 	if err != nil {
+		return
+	}
+
+	// Create a new reader from the image file.
+	reader := bufio.NewReader(image)
+
+	// Read from the reader into a byte array.
+	byteData := make([]byte, reader.Size())
+	_, err = reader.Read(byteData)
+	if err != nil {
+		return
+	}
+
+	// Check if the file isn't an image.
+	if !filetype.IsImage(byteData) {
+		err = ErrNotImage
 		return
 	}
 
@@ -45,7 +71,7 @@ func Image(file *multipart.FileHeader) (location string, err error) {
 	result, err := uploader.Upload(&s3manager.UploadInput{
 		Bucket: aws.String("froogo-ap"),        // Bucket name to upload to.
 		Key:    aws.String("post/" + fileName), // Directory to upload to.
-		Body:   bufio.NewReader(image),         // Body to upload (just bytes).
+		Body:   bytes.NewReader(byteData),      // Body to upload (just bytes).
 		ACL:    aws.String("public-read"),      // Set to public read (no key required to read).
 	})
 	if err != nil {
