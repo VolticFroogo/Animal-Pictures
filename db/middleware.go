@@ -1,7 +1,6 @@
 package db
 
 import (
-	"log"
 	"time"
 
 	"github.com/VolticFroogo/Animal-Pictures/helpers"
@@ -74,33 +73,4 @@ func DeleteJTI(jti string) (err error) {
 func DeAuthUser(uuid string) (err error) {
 	_, err = db.Exec("DELETE FROM jti WHERE useruuid=?", uuid)
 	return
-}
-
-func jtiGarbageCollector() {
-	ticker := time.NewTicker(time.Hour) // Tick every hour.
-	for {
-		<-ticker.C
-		rows, err := db.Query("SELECT id, expiry FROM jti")
-		if err != nil {
-			log.Printf("Error querying JTI DB in JTI garbage collector: %v", err)
-			return
-		}
-
-		defer rows.Close()
-
-		jti := models.JTI{} // Create struct to store a JTI in.
-		for rows.Next() {
-			err = rows.Scan(&jti.ID, &jti.Expiry) // Scan data from query.
-			if err != nil {
-				log.Printf("Error scanning rows in JTI garbage collector: %v", err)
-				return
-			}
-
-			_, err := CheckJTI(jti)
-			if err != nil {
-				log.Printf("Error checking in JTI garbage collector: %v", err)
-				return
-			}
-		}
-	}
 }

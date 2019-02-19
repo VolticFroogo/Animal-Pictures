@@ -37,11 +37,6 @@ var (
 // InitDB initializes the Database.
 func InitDB() (err error) {
 	db, err = sql.Open(Type, ConnString)
-	if err != nil {
-		return
-	}
-
-	go jtiGarbageCollector()
 	return
 }
 
